@@ -5,7 +5,7 @@ liuShenWuXing = {'甲': 0, '乙': 0, '丙': 1, '丁': 1,
 liuShen = ('青龙', '朱雀', '勾陈', '螣蛇', '白虎', '玄武')
 
 baGua = {'111': '乾', '011': '兑', '101': '离', '001': '震',
-           '110': '巽', '010': '坎', '100': '艮', '000': '坤'}
+         '110': '巽', '010': '坎', '100': '艮', '000': '坤'}
 
 
 # 六神, 根据日干五行配对六神五行
@@ -15,7 +15,7 @@ def setLiuShen(inStr):  # -> 日干支
 
 
 # 寻宫诀,四五游魂内变更
-def doNotBin(inStr):  # -> '111000'
+def doNeiGuaBinNot(inStr):  # -> '111000'
     if len(inStr) == 6: s = inStr[3:6]
     else: s = inStr
     return ''.join([str(int(c)^1) for c in s])  #.replace(' ','')
@@ -37,12 +37,10 @@ def setShiYao(inStr):
     # 人同游魂人变归
     if waiGuaNum[1] == neiGuaNum[1]:
         if waiGuaNum[0] != neiGuaNum[0] and waiGuaNum[2] != neiGuaNum[2]:
-            youguiHun = '游魂'
-            return 4
+            youguiHun = '游魂'; return 4
     else:
         if waiGuaNum[0] == neiGuaNum[0] and waiGuaNum[2] == neiGuaNum[2]:
-            youguiHun = '归魂'
-            return 3
+            youguiHun = '归魂'; return 3
     # 地同四世地变初
     if waiGuaNum[2] == neiGuaNum[2]:
         if waiGuaNum[1] != neiGuaNum[1] and waiGuaNum[0] != neiGuaNum[0]: return 4
