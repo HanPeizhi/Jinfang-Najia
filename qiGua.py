@@ -67,6 +67,7 @@ def setShiYao(inStr):
     waiGuaNum = inStr[:3]
     neiGuaNum = inStr[3:]
     global youguiHun
+    youguiHun = ''
     # 天同二世天变五
     if waiGuaNum[0] == neiGuaNum[0]:
         if waiGuaNum[1] != neiGuaNum[1] and waiGuaNum[2] != neiGuaNum[2]: return 2
@@ -184,11 +185,74 @@ def naGan(inStr):
 
 #def naLiuQin(inStr):
 
+# 水1 # 木2 # 金3 # 火4 # 土5
+def liuQin(inGongWX, inYaoWX):
+    # 水
+    if inGongWX == 1:
+        if inYaoWX == 1: # 水1
+            return '兄弟'
+        elif inYaoWX == 2: # 木2
+            return '子孙'
+        elif inYaoWX == 3: # 金3
+            return '父母'
+        elif inYaoWX == 4: # 火4
+            return '妻财'
+        elif inYaoWX == 5: # 土5
+            return '官鬼'
+    # 木
+    elif inGongWX == 2:
+        if inYaoWX == 1: # 水1
+            return '父母'
+        elif inYaoWX == 2: # 木2
+            return '兄弟'
+        elif inYaoWX == 3: # 金3
+            return '官鬼'
+        elif inYaoWX == 4: # 火4
+            return '子孙'
+        elif inYaoWX == 5: # 土5
+            return '妻财'
+    # 金
+    elif inGongWX == 3:
+        if inYaoWX == 1: # 水1
+            return '子孙'
+        elif inYaoWX == 2: # 木2
+            return '妻财'
+        elif inYaoWX == 3: # 金3
+            return '兄弟'
+        elif inYaoWX == 4: # 火4
+            return '官鬼'
+        elif inYaoWX == 5: # 土5
+            return '父母'
+    # 火
+    elif inGongWX == 4:
+        if inYaoWX == 1: # 水1
+            return '官鬼'
+        elif inYaoWX == 2: # 木2
+            return '父母'
+        elif inYaoWX == 3: # 金3
+            return '妻财'
+        elif inYaoWX == 4: # 火4
+            return '兄弟'
+        elif inYaoWX == 5: # 土5
+            return '子孙'
+    # 土
+    elif inGongWX == 5:
+        if inYaoWX == 1: # 水1
+            return '妻财'
+        elif inYaoWX == 2: # 木2
+            return '官鬼'
+        elif inYaoWX == 3: # 金3
+            return '子孙'
+        elif inYaoWX == 4: # 火4
+            return '父母'
+        elif inYaoWX == 5: # 土5
+            return '兄弟'
 
-
+    return ' '
 
 
 if __name__ == '__main__':
+    inBinGua = '111000'
     # youguiHun = ''
     # print(setLiuShen('甲'))  # ['青龙', '朱雀', '勾陈', '螣蛇', '白虎', '玄武']
     # print(getNeiWaiGua('111000'))  # 乾坤
@@ -197,14 +261,14 @@ if __name__ == '__main__':
 
     # print(naZhi('111000'), naGan('111000'))
 
-    waigu_tiangan = naGan('111000')[0] # 外卦天干
-    waigua_dizhi = naZhi('111000')[0] # 外卦地支
+    waigu_tiangan = naGan(inBinGua)[0] # 外卦天干
+    waigua_dizhi = naZhi(inBinGua)[0] # 外卦地支
     yao_4_ganzhi = waigu_tiangan + waigua_dizhi[0] + zhiWuXing[waigua_dizhi[0]]
     yao_5_ganzhi = waigu_tiangan + waigua_dizhi[1] + zhiWuXing[waigua_dizhi[1]]
     yao_6_ganzhi = waigu_tiangan + waigua_dizhi[2] + zhiWuXing[waigua_dizhi[2]]
 
-    neigua_tiangan = naGan('111000')[1] # 内卦天干
-    neigua_dizhi = naZhi('111000')[1] # 内卦地支
+    neigua_tiangan = naGan(inBinGua)[1] # 内卦天干
+    neigua_dizhi = naZhi(inBinGua)[1] # 内卦地支
     yao_1_ganzhi = neigua_tiangan + neigua_dizhi[0] + zhiWuXing[neigua_dizhi[0]]
     yao_2_ganzhi = neigua_tiangan + neigua_dizhi[1] + zhiWuXing[neigua_dizhi[1]]
     yao_3_ganzhi = neigua_tiangan + neigua_dizhi[2] + zhiWuXing[neigua_dizhi[2]]
@@ -236,6 +300,20 @@ if __name__ == '__main__':
     print(waiGuaGong('111000')) # 乾
     print(neiGuaGong('111000')) # 坤
 
-    inBinGua = '011100'
+
     shiyaoshu = setShiYao(inBinGua)
-    print('卦宫：', guaGong(inBinGua, shiyaoshu)) # 卦宫： 兑
+    strGuaGong = guaGong(inBinGua, shiyaoshu)
+
+    print('卦宫：', strGuaGong) # 卦宫： 兑
+
+    if youguiHun != '':
+        print(1)
+
+    gongWuXing = baGuaWuXing[strGuaGong]
+    gongWuXingShu = wuXingShu[gongWuXing] # 卦宫五行
+    # print(gongWuXingShu) # 金 #3
+    yaoWuXingShu = wuXingShu[yao_1_ganzhi[-1]] # 爻地支五行数
+    # print(yaoWuXingShu) # 5 #土
+
+    strLiuQin = liuQin(gongWuXingShu, yaoWuXingShu)
+    print(strLiuQin) # 爻六亲父母
