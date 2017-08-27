@@ -117,4 +117,5 @@ if __name__ == '__main__':
     # print(naGanBiao[neiWaiGua[0]][0])  # 甲
     # print(naZhi('111000'), naGan('111000'))
     #print(doNotBin('111000'))
-    print(setShiYao('101101'))
+    print(setShiYao('101101')) #6
+    print(naZhiBiao['乾'][0])  #子寅辰
