@@ -84,10 +84,10 @@ def getNeiWaiGua(inStr):  # -> '111000'
 
 
 # 纳甲口诀：
-# 乾金甲子外壬午 子寅辰午申戍 
-# 震木庚子外庚午 子寅辰午申戍 
-# 坎水戊寅外戊申 寅辰午申戍子 
-# 艮土丙辰外丙戍 辰午申戍子寅 
+# 乾金甲子外壬午 子寅辰午申戌 
+# 震木庚子外庚午 子寅辰午申戌 
+# 坎水戊寅外戊申 寅辰午申戌子 
+# 艮土丙辰外丙戌 辰午申戌子寅 
 # 坤土乙未外癸丑 未巳卯丑亥酉 
 # 巽木辛丑外辛未 丑亥酉未巳卯 
 # 离火巳卯外巳酉 卯丑亥酉未巳 
@@ -96,11 +96,11 @@ def getNeiWaiGua(inStr):  # -> '111000'
 naZhiBiao = {
     '乾': {
         0: '子寅辰',   # 内卦
-        1: '午申戍'    # 外卦
+        1: '午申戌'    # 外卦
     },
-    '震': {0: '子寅辰', 1: '午申戍'},
-    '坎': {0: '寅辰午', 1: '申戍子'},
-    '艮': {0: '辰午申', 1: '戍子寅'},
+    '震': {0: '子寅辰', 1: '午申戌'},
+    '坎': {0: '寅辰午', 1: '申戌子'},
+    '艮': {0: '辰午申', 1: '戌子寅'},
     '坤': {0: '未巳卯', 1: '丑亥酉'},
     '巽': {0: '丑亥酉', 1: '未巳卯'},
     '离': {0: '卯丑亥', 1: '酉未巳'},
@@ -123,7 +123,7 @@ naGanBiao = {
 }
 
 # 纳地支
-def naZhi(inStr):  # -> '111000'
+def naZhi(inStr):  # -> '111000' -> 乾坤; naiWaiGua[0] -> 乾 外卦
     neiWaiGua = getNeiWaiGua(inStr)
     return naZhiBiao[neiWaiGua[0]][1], naZhiBiao[neiWaiGua[1]][0]
 
@@ -134,6 +134,25 @@ def naGan(inStr):
     return naGanBiao[neiWaiGua[0]][1], naGanBiao[neiWaiGua[1]][0]
 
 
+#def naLiuQin(inStr):
+
+zhiWuXing = {
+    '子': '水',
+    '丑': '土',
+    '寅': '木',
+    '卯': '木',
+    '辰': '土',
+    '巳': '火',
+    '午': '火',
+    '未': '土',
+    '申': '金',
+    '酉': '金',
+    '戌': '土',
+    '亥': '水'
+}
+
+
+
 
 if __name__ == '__main__':
     # youguiHun = ''
@@ -141,7 +160,32 @@ if __name__ == '__main__':
     # print(getNeiWaiGua('111000'))  # 乾坤
     # neiWaiGua = getNeiWaiGua('111000')
     # print(naGanBiao[neiWaiGua[0]][0])  # 甲
+
     # print(naZhi('111000'), naGan('111000'))
+
+    waigu_tiangan = naGan('111000')[0] # 外卦天干
+    waigua_dizhi = naZhi('111000')[0] # 外卦地支
+    yao_4_ganzhi = waigu_tiangan + waigua_dizhi[0] + zhiWuXing[waigua_dizhi[0]]
+    yao_5_ganzhi = waigu_tiangan + waigua_dizhi[1] + zhiWuXing[waigua_dizhi[1]]
+    yao_6_ganzhi = waigu_tiangan + waigua_dizhi[2] + zhiWuXing[waigua_dizhi[2]]
+
+    neigua_tiangan = naGan('111000')[1] # 内卦天干
+    neigua_dizhi = naZhi('111000')[1] # 内卦地支
+    yao_1_ganzhi = neigua_tiangan + neigua_dizhi[0] + zhiWuXing[neigua_dizhi[0]]
+    yao_2_ganzhi = neigua_tiangan + neigua_dizhi[1] + zhiWuXing[neigua_dizhi[1]]
+    yao_3_ganzhi = neigua_tiangan + neigua_dizhi[2] + zhiWuXing[neigua_dizhi[2]]
+
+    # print(waigu_tiangan, neigua_tiangan)
+    # print(waigua_dizhi)
+    print(yao_6_ganzhi)
+    print(yao_5_ganzhi)
+    print(yao_4_ganzhi)
+    print(yao_3_ganzhi)
+    print(yao_2_ganzhi)
+    print(yao_1_ganzhi)
+
+    print(zhiWuXing['未'])
+
 
     # print(setShiYao('101101')) #6
     # print(naZhiBiao['乾'][0])  #子寅辰
