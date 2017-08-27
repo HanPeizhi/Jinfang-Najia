@@ -1,12 +1,13 @@
 liuShenWuXing = {'甲': 0, '乙': 0, '丙': 1, '丁': 1,
                  '戊': 2, '己': 3, '庚': 4, '辛': 4,
-                 '壬': 5, '癸': 5} #0->木  1->火 #唯一要注意的是：戊->勾陈，而己->螣蛇
+                 '壬': 5, '癸': 5} #0->木  1->火 #唯一要注意的是：戊->勾陈，己->螣蛇
 
 liuShen = ('青龙', '朱雀', '勾陈', '螣蛇', '白虎', '玄武')
 
 baGua = {'111': '乾', '011': '兑', '101': '离', '001': '震',
          '110': '巽', '010': '坎', '100': '艮', '000': '坤'}
 
+baGuaWuXing = {}
 
 # 六神, 根据日干五行配对六神五行
 def setLiuShen(inStr):  # -> 日干支
@@ -14,17 +15,40 @@ def setLiuShen(inStr):  # -> 日干支
     return liuShen[index:] + liuShen[:index]
 
 
-# 寻宫诀,四五游魂内变更
-def doNeiGuaBinNot(inStr):  # -> '111000'
+'''
+认宫诀：
+一二三六外卦宫，四五游魂内变更。
+若问归魂何所取，归魂内卦是本宫。'''
+
+# 一二三六外卦宫
+def neiGuaGong(inStr):
+    return baGua[inStr[3:6]]
+
+
+def waiGuaGong(inStr):
+    return baGua[inStr[:3]]
+
+# 寻宫诀,四五游魂内变更          '123456'
+def neiGuaBinNot(inStr):  # -> '111000'
     if len(inStr) == 6: s = inStr[3:6]
     else: s = inStr
-    return ''.join([str(int(c)^1) for c in s])  #.replace(' ','')
+    return baGua[''.join([str(int(c)^1) for c in s])]  #.replace(' ','')
 
+
+
+'''
+寻世诀：
+天同二世天变五，地同四世地变初。
+本宫六世三世异，人同游魂人变归。
+
+1. 天同人地不同世在二，天不同人地同在五
+2. 三才不同世在三
+3. 人同其他不同世在四，人不同其他同在三'''
 
 # 寻世诀： 天同二世天变五  地同四世地变初  本宫六世三世异  人同游魂人变归
 # int('111', 2) => 7
-# 世爻 >= 3, 应爻 == 世爻 - 3， index = 5 - 世爻 + 1
-# 世爻 <= 3, 应爻 == 世爻 + 3，
+# 世爻 >= 3, 应爻 = 世爻 - 3， index = 5 - 世爻 + 1
+# 世爻 <= 3, 应爻 = 世爻 + 3，
 def setShiYao(inStr):
     waiGuaNum = inStr[:3]
     neiGuaNum = inStr[3:]
@@ -37,22 +61,24 @@ def setShiYao(inStr):
     # 人同游魂人变归
     if waiGuaNum[1] == neiGuaNum[1]:
         if waiGuaNum[0] != neiGuaNum[0] and waiGuaNum[2] != neiGuaNum[2]:
-            youguiHun = '游魂'; return 4
+            youguiHun = '游魂'; return 4 #, youguiHun
     else:
         if waiGuaNum[0] == neiGuaNum[0] and waiGuaNum[2] == neiGuaNum[2]:
-            youguiHun = '归魂'; return 3
+            youguiHun = '归魂'; return 3 #, youguiHun
     # 地同四世地变初
     if waiGuaNum[2] == neiGuaNum[2]:
         if waiGuaNum[1] != neiGuaNum[1] and waiGuaNum[0] != neiGuaNum[0]: return 4
     else:
         if waiGuaNum[1] == neiGuaNum[1] and waiGuaNum[0] == neiGuaNum[0]: return 1
-    # 本宫六世三世异
+    # 本宫六世
     if waiGuaNum == neiGuaNum: return 6
+    # 三世异
     if not int(waiGuaNum, 2) & int(neiGuaNum, 2): return 3
+    # print(int('101', 2) & int('010', 2)) # 0
 
     # return waiGuaNum
 
-
+# 纳天干地支用，其实不用这步也可以
 def getNeiWaiGua(inStr):  # -> '111000'
     return  baGua[inStr[:3]] + baGua[inStr[3:]]  # 外卦 + 内卦
 
@@ -110,12 +136,16 @@ def naGan(inStr):
 
 
 if __name__ == '__main__':
-    #youguiHun = ''
+    # youguiHun = ''
     # print(setLiuShen('甲'))  # ['青龙', '朱雀', '勾陈', '螣蛇', '白虎', '玄武']
     # print(getNeiWaiGua('111000'))  # 乾坤
     # neiWaiGua = getNeiWaiGua('111000')
     # print(naGanBiao[neiWaiGua[0]][0])  # 甲
     # print(naZhi('111000'), naGan('111000'))
-    #print(doNotBin('111000'))
-    print(setShiYao('101101')) #6
-    print(naZhiBiao['乾'][0])  #子寅辰
+
+    # print(setShiYao('101101')) #6
+    # print(naZhiBiao['乾'][0])  #子寅辰
+
+    print(neiGuaBinNot('111000')) # 乾
+    print(waiGuaGong('111000')) # 乾
+    print(neiGuaGong('111000')) # 坤
