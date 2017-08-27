@@ -24,7 +24,7 @@ def setLiuShen(inStr):  # -> 日干支
 def neiGuaGong(inStr):
     return baGua[inStr[3:6]]
 
-
+# 归魂内卦是本宫
 def waiGuaGong(inStr):
     return baGua[inStr[:3]]
 
