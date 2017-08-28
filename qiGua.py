@@ -36,8 +36,8 @@ baGuaWuXing = {
 
 # 五行生数
 wuXingShu = {
-    '木': 1,
-    '水': 2,
+    '水': 1,
+    '木': 2,
     '金': 3,
     '火': 4,
     '土': 5
@@ -263,24 +263,19 @@ if __name__ == '__main__':
 
     waigu_tiangan = naGan(inBinGua)[0] # 外卦天干
     waigua_dizhi = naZhi(inBinGua)[0] # 外卦地支
-    yao_4_ganzhi = waigu_tiangan + waigua_dizhi[0] + zhiWuXing[waigua_dizhi[0]]
-    yao_5_ganzhi = waigu_tiangan + waigua_dizhi[1] + zhiWuXing[waigua_dizhi[1]]
-    yao_6_ganzhi = waigu_tiangan + waigua_dizhi[2] + zhiWuXing[waigua_dizhi[2]]
+    yao_4 = waigu_tiangan + waigua_dizhi[0] + zhiWuXing[waigua_dizhi[0]]
+    yao_5 = waigu_tiangan + waigua_dizhi[1] + zhiWuXing[waigua_dizhi[1]]
+    yao_6 = waigu_tiangan + waigua_dizhi[2] + zhiWuXing[waigua_dizhi[2]]
 
     neigua_tiangan = naGan(inBinGua)[1] # 内卦天干
     neigua_dizhi = naZhi(inBinGua)[1] # 内卦地支
-    yao_1_ganzhi = neigua_tiangan + neigua_dizhi[0] + zhiWuXing[neigua_dizhi[0]]
-    yao_2_ganzhi = neigua_tiangan + neigua_dizhi[1] + zhiWuXing[neigua_dizhi[1]]
-    yao_3_ganzhi = neigua_tiangan + neigua_dizhi[2] + zhiWuXing[neigua_dizhi[2]]
+    yao_1 = neigua_tiangan + neigua_dizhi[0] + zhiWuXing[neigua_dizhi[0]]
+    yao_2 = neigua_tiangan + neigua_dizhi[1] + zhiWuXing[neigua_dizhi[1]]
+    yao_3 = neigua_tiangan + neigua_dizhi[2] + zhiWuXing[neigua_dizhi[2]]
 
     # print(waigu_tiangan, neigua_tiangan)
     # print(waigua_dizhi)
-    print(yao_6_ganzhi)
-    print(yao_5_ganzhi)
-    print(yao_4_ganzhi)
-    print(yao_3_ganzhi)
-    print(yao_2_ganzhi)
-    print(yao_1_ganzhi)
+
 
     '''
     壬戌土
@@ -290,18 +285,19 @@ if __name__ == '__main__':
     乙巳火
     乙未土'''
 
-    print(zhiWuXing['未'])
+    # print(zhiWuXing['未'])
 
 
-    print(setShiYao('101101')) # 世6爻
+    # print('世爻在：', setShiYao('101101')) # 世6爻
     # print(naZhiBiao['乾'][0])  #子寅辰
 
-    print(neiGuaBinNot('111000')) # 乾
-    print(waiGuaGong('111000')) # 乾
-    print(neiGuaGong('111000')) # 坤
+    # print(neiGuaBinNot('111000')) # 乾
+    # print(waiGuaGong('111000')) # 乾
+    #print(neiGuaGong('111000')) # 坤
 
 
     shiyaoshu = setShiYao(inBinGua)
+    print('世爻在：', shiyaoshu)
     strGuaGong = guaGong(inBinGua, shiyaoshu)
 
     print('卦宫：', strGuaGong) # 卦宫： 兑
@@ -312,8 +308,45 @@ if __name__ == '__main__':
     gongWuXing = baGuaWuXing[strGuaGong]
     gongWuXingShu = wuXingShu[gongWuXing] # 卦宫五行
     # print(gongWuXingShu) # 金 #3
-    yaoWuXingShu = wuXingShu[yao_1_ganzhi[-1]] # 爻地支五行数
+    yaoWuXingShu = wuXingShu[yao_1[-1]] # 爻地支五行数
     # print(yaoWuXingShu) # 5 #土
-
     strLiuQin = liuQin(gongWuXingShu, yaoWuXingShu)
-    print(strLiuQin) # 爻六亲父母
+    #print(strLiuQin) # 爻六亲 父母
+    yao_1 = strLiuQin + yao_1
+
+    yaoWuXingShu = wuXingShu[yao_2[-1]]  # 爻地支五行数
+    strLiuQin = liuQin(gongWuXingShu, yaoWuXingShu)
+    yao_2 = strLiuQin + yao_2
+
+    yaoWuXingShu = wuXingShu[yao_3[-1]]  # 爻地支五行数
+    strLiuQin = liuQin(gongWuXingShu, yaoWuXingShu)
+    yao_3 = strLiuQin + yao_3
+
+    yaoWuXingShu = wuXingShu[yao_4[-1]]  # 爻地支五行数
+    strLiuQin = liuQin(gongWuXingShu, yaoWuXingShu)
+    yao_4 = strLiuQin + yao_4
+
+    yaoWuXingShu = wuXingShu[yao_5[-1]]  # 爻地支五行数
+    strLiuQin = liuQin(gongWuXingShu, yaoWuXingShu)
+    yao_5 = strLiuQin + yao_5
+
+    yaoWuXingShu = wuXingShu[yao_6[-1]]  # 爻地支五行数
+    strLiuQin = liuQin(gongWuXingShu, yaoWuXingShu)
+    yao_6 = strLiuQin + yao_6
+
+    print(yao_6)
+    print(yao_5)
+    print(yao_4)
+    print(yao_3)
+    print(yao_2)
+    print(yao_1)
+
+    '''
+    世爻在： 3
+    卦宫： 乾
+    父母壬戌土
+    兄弟壬申金
+    官鬼壬午火
+    妻财乙卯木
+    官鬼乙巳火
+    父母乙未土'''
